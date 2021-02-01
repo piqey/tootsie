@@ -6,7 +6,7 @@ import discord
 from dotenv import load_dotenv
 
 # Import our own files
-import events as events
+import events
 
 # Mount dotenv
 load_dotenv()
@@ -17,7 +17,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 client = discord.Client()
 
 # Append client events with our own
-events.attachEvents(client)
+events.appendEvents(client)
 
 # Run the client
 client.run(TOKEN)
