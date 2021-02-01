@@ -5,7 +5,7 @@ import random
 import discord
 
 # Import our own files
-import constants.messages as MESSAGES
+from constants import MESSAGES
 
 
 def appendEvents(bot):
@@ -26,6 +26,6 @@ def appendEvents(bot):
                 message.author != bot.user):
             # Start sending the message
             print(f"Received a DM from {message.author}, sending response...")
-            await message.channel.send(random.choice(MESSAGES.DM_RESPONSES))
+            await message.channel.send(random.choice(MESSAGES["DM_RESPONSES"]))
             # Done sending the message
             print(f"Sent a response to {message.author}'s DM.")
