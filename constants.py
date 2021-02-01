@@ -3,6 +3,17 @@ BASICS = {
     "CMD_PREFIX": "]"
 }
 
+# Prints
+PRINTS = {
+    # Define some stuff that only appear in the program window
+    "READY": "yoooo {user} is in the house",
+    "FOUND_GUILD": "{user} is connected to {guild} ({id})",
+
+    # DM-related prints
+    "DM_RECEIVED": "Received a DM from {author}, sending response...",
+    "DM_REPLIED": "Sent a response to {author}'s DM."
+}
+
 # Messages
 MESSAGES = {
     # Define some different messages that won't ever change

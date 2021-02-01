@@ -5,19 +5,20 @@ import random
 import discord
 
 # Import our own files
-from constants import MESSAGES
+from constants import PRINTS, MESSAGES
 
 
 def appendEvents(bot):
     @bot.event
     async def on_ready():
         # Announce one's presence
-        print(f"yoooo {bot.user} is in the house")
+        print(PRINTS["READY"].format(user=bot.user))
 
         # Loop through all the guilds (servers) the bot is a part of
         for guild in bot.guilds:
             # Print the current guild
-            print(f"{bot.user} is connected to {guild.name} ({guild.id})")
+            print(PRINTS["FOUND_GUILD"].format(user=bot.user, guild=guild.name,
+                  id=guild.id))
 
     @bot.event
     async def on_message(message):
@@ -25,7 +26,7 @@ def appendEvents(bot):
         if (isinstance(message.channel, discord.channel.DMChannel) and
                 message.author != bot.user):
             # Start sending the message
-            print(f"Received a DM from {message.author}, sending response...")
+            print(PRINTS["DM_RECEIVED"].format(author=message.author))
             await message.channel.send(random.choice(MESSAGES["DM_RESPONSES"]))
             # Done sending the message
-            print(f"Sent a response to {message.author}'s DM.")
+            print(PRINTS["DM_REPLIED"].format(author=message.author))
