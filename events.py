@@ -8,22 +8,22 @@ import discord
 import constants.messages as MESSAGES
 
 
-def appendEvents(client):
-    @client.event
+def appendEvents(bot):
+    @bot.event
     async def on_ready():
         # Announce one's presence
-        print(f"yoooo {client.user} is in the house")
+        print(f"yoooo {bot.user} is in the house")
 
         # Loop through all the guilds (servers) the bot is a part of
-        for guild in client.guilds:
+        for guild in bot.guilds:
             # Print the current guild
-            print(f"{client.user} is connected to {guild.name} ({guild.id})")
+            print(f"{bot.user} is connected to {guild.name} ({guild.id})")
 
-    @client.event
+    @bot.event
     async def on_message(message):
         # Confirm that the message was received in the bot's DMs
         if (isinstance(message.channel, discord.channel.DMChannel) and
-                message.author != client.user):
+                message.author != bot.user):
             # Start sending the message
             print(f"Received a DM from {message.author}, sending response...")
             await message.channel.send(random.choice(MESSAGES.DM_RESPONSES))
