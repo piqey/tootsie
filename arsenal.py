@@ -12,7 +12,7 @@ SOUND_SUBDIR = "farts"
 
 
 def pickFart():
-    return random.choice(SOUNDS[SOUND_SUBDIR])
+    return random.choice(list(SOUNDS[SOUND_SUBDIR].items()))
 
 
 def handleErrorEncounter(e):
@@ -39,7 +39,7 @@ def addCommands(bot):
             await voiceChannel.connect()
 
             # Create StreamPlayer
-            fart = pickFart()
+            fartName, fart = pickFart()
             context.voice_client.play(fart, after=handleErrorEncounter)
 
             # Wait until the sound is finished playing

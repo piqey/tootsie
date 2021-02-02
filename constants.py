@@ -59,10 +59,10 @@ SOUND_DIR = getAbsoluteFromRelative(SOUND_DIR_REL)
 SOUNDS = {}
 
 for path, directories, filenames in os.walk(SOUND_DIR):
-    sources = []
+    sources = {}
 
     for filePath in filenames:
-        sources.append(fastPCM(os.path.join(path, filePath)))
+        sources[filePath] = fastPCM(os.path.join(path, filePath))
 
     if path == SOUND_DIR:
         # Would rather have files right inside SOUND_DIR be listed under
