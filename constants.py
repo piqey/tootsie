@@ -32,5 +32,17 @@ MESSAGES = {
         "I'm a bot that makes fart noises, why are you messaging me?",
         "Are you looking for an easter egg or something?",
         "I hope you don't keep sending me these messages."
-    )
+    ),
+    "FART_AFFIRMATION": (
+        "Your wish is my command, {user}.",
+        "It will be done, my lord ({user}).",
+        "Consider it done, {user}!",
+        "Good thing you called, {user}, I just ate a ton of beans.",
+        "Aye aye, captain ({user})!",
+        "aight sounds good {user}",
+        "tactical warhead inbound by order of {user}",
+        "{user} you better prepare yourself for some extra smelly braps",
+        "{user}, how can you make such a crappy request?"
+    ),
+    "FART_FAILED": "{user}, you have to be in a voice channel to do that!"
 }

@@ -2,7 +2,7 @@
 import random
 
 # Import our own files
-from constants import PRINTS
+from constants import PRINTS, MESSAGES
 from sound import soundManager
 
 
@@ -14,12 +14,17 @@ def pickFart():
     return random.choice(list(sounds.keys()))
 
 
+def pickReply():
+    return random.choice(MESSAGES["FART_AFFIRMATION"])
+
+
 def eHandler(e):
     if e is not None:
         print(PRINTS["FART_ERROR"].format(error=e))
 
 
 def addCommands(bot):
+    # TODO: Disable if bot is already in a voice channel
     @bot.command(
         name="fart",
         help="Forces the bot to do what it does best",
@@ -32,6 +37,10 @@ def addCommands(bot):
 
         # Only join and wreak havoc if the user is in a voice channel
         if voiceChannel is not None:
+            # Communicate with the command's user
+            reply = pickReply().format(user=context.author.name)
+            await context.channel.send(reply)
+
             # Grab voice channel name
             channel = voiceChannel.name
 
@@ -58,3 +67,5 @@ def addCommands(bot):
             print(PRINTS["DISCONNECTED"].format(channel=channel))
         else:
             print(PRINTS["FART_FAILED"])
+            reply = MESSAGES["FART_FAILED"].format(user=context.author.name)
+            await context.channel.send(reply)
