@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # Import our own files
 from constants import BASICS
 import events
+import arsenal
 
 # Mount dotenv
 load_dotenv()
@@ -19,6 +20,8 @@ bot = commands.Bot(command_prefix=BASICS["CMD_PREFIX"])
 
 # Append bot events with our own
 events.appendEvents(bot)
+# Add commands to the bot instance
+arsenal.addCommands(bot)
 
 # Run the bot
 bot.run(TOKEN)
