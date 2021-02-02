@@ -15,6 +15,11 @@ def pickFart():
     return random.choice(SOUNDS[SOUND_SUBDIR])
 
 
+def handleErrorEncounter(e):
+    if e is not None:
+        print(PRINTS["FART_ERROR"].format(error=e))
+
+
 def addCommands(bot):
     @bot.command(
         name="fart",
@@ -35,7 +40,7 @@ def addCommands(bot):
 
             # Create StreamPlayer
             fart = pickFart()
-            context.voice_client.play(fart)
+            context.voice_client.play(fart, after=handleErrorEncounter)
 
             # Wait until the sound is finished playing
             while (context.voice_client is not None and
@@ -44,6 +49,9 @@ def addCommands(bot):
 
             # Stop the player just in case
             context.voice_client.stop()
+            # Announce in the script window that we're done doing our job
+            print(PRINTS["FART_PLAYED"].format(channel=channel))
+
             # Disconnect after we're done ruining everyone's day
             print(PRINTS["DISCONNECTING"])
             await context.voice_client.disconnect()
