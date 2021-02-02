@@ -1,6 +1,7 @@
 # Basic constants
 BASICS = {
-    "CMD_PREFIX": "]"
+    "CMD_PREFIX": "]",
+    "FART_MAX": 8
 }
 
 # Prints
@@ -44,5 +45,6 @@ MESSAGES = {
         "{user} you better prepare yourself for some extra smelly braps",
         "{user}, how can you make such a crappy request?"
     ),
-    "FART_FAILED": "{user}, you have to be in a voice channel to do that!"
+    "FART_FAILED": "{user}, you have to be in a voice channel to do that!",
+    "FART_TERRIBLE_PERSON": "You're a bigger piece of shit than I am. Denied."
 }

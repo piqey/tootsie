@@ -2,7 +2,7 @@
 import random
 
 # Import our own files
-from constants import PRINTS, MESSAGES
+from constants import BASICS, PRINTS, MESSAGES
 from sound import soundManager
 
 
@@ -30,13 +30,15 @@ def addCommands(bot):
         help="Forces the bot to do what it does best",
         pass_context=True
     )
-    async def forceFart(context):
+    async def forceFart(context, reps=1):
         # Get the user's voice channel
         voiceChannel = (context.message.author.voice and
                         context.message.author.voice.channel)
 
         # Only join and wreak havoc if the user is in a voice channel
-        if voiceChannel is not None:
+        if reps > BASICS["FART_MAX"]:
+            await context.channel.send(MESSAGES["FART_TERRIBLE_PERSON"])
+        elif voiceChannel is not None:
             # Communicate with the command's user
             reply = pickReply().format(user=context.author.name)
             await context.channel.send(reply)
@@ -50,13 +52,14 @@ def addCommands(bot):
             # Store VoiceClient instance for ease of access
             vc = context.voice_client
 
-            # Stream the sound
-            await soundManager.playSound(
-                vc,
-                pickFart(),
-                group=SOUND_SUBDIR,
-                after=eHandler
-            )
+            # Stream the sound (a number of times equal to rep)
+            for _ in range(reps):
+                await soundManager.playSound(
+                    vc,
+                    pickFart(),
+                    group=SOUND_SUBDIR,
+                    after=eHandler
+                )
 
             # Announce in the script window that we're done doing our job
             print(PRINTS["FART_PLAYED"].format(channel=channel))
