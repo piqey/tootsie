@@ -1,21 +1,20 @@
 # Import native dependencies
 import random
 
-# Import installed dependencies
-import asyncio
-
 # Import our own files
-from constants import PRINTS, SOUNDS
+from constants import PRINTS
+from sound import soundManager
 
 
 SOUND_SUBDIR = "farts"
 
 
 def pickFart():
-    return random.choice(list(SOUNDS[SOUND_SUBDIR].items()))
+    sounds = soundManager.getDict(SOUND_SUBDIR)
+    return random.choice(list(sounds.keys()))
 
 
-def handleErrorEncounter(e):
+def eHandler(e):
     if e is not None:
         print(PRINTS["FART_ERROR"].format(error=e))
 
@@ -35,26 +34,27 @@ def addCommands(bot):
         if voiceChannel is not None:
             # Grab voice channel name
             channel = voiceChannel.name
+
             # Join voice channel
             await voiceChannel.connect()
 
-            # Create StreamPlayer
-            fartName, fart = pickFart()
-            context.voice_client.play(fart, after=handleErrorEncounter)
+            # Store VoiceClient instance for ease of access
+            vc = context.voice_client
 
-            # Wait until the sound is finished playing
-            while (context.voice_client is not None and
-                    context.voice_client.is_playing()):
-                await asyncio.sleep(1)
+            # Stream the sound
+            await soundManager.playSound(
+                vc,
+                pickFart(),
+                group=SOUND_SUBDIR,
+                after=eHandler
+            )
 
-            # Stop the player just in case
-            context.voice_client.stop()
             # Announce in the script window that we're done doing our job
             print(PRINTS["FART_PLAYED"].format(channel=channel))
 
-            # Disconnect after we're done ruining everyone's day
+            # Disconnect after we're done ruining the moment
             print(PRINTS["DISCONNECTING"])
-            await context.voice_client.disconnect()
+            await vc.disconnect()
             print(PRINTS["DISCONNECTED"].format(channel=channel))
         else:
             print(PRINTS["FART_FAILED"])

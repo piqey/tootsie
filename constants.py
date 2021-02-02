@@ -1,9 +1,3 @@
-# Import native dependencies
-import os
-
-# Import installed dependencies
-import discord
-
 # Basic constants
 BASICS = {
     "CMD_PREFIX": "]"
@@ -40,35 +34,3 @@ MESSAGES = {
         "I hope you don't keep sending me these messages."
     )
 }
-
-
-# Sound stuff, doing it this way to make sure the files load initially
-def getAbsoluteFromRelative(path):
-    fileDir = os.path.dirname(os.path.realpath("__file__"))
-    return os.path.join(fileDir, path)
-
-
-def fastPCM(relative):
-    return discord.FFmpegPCMAudio(getAbsoluteFromRelative(relative))
-
-
-SOUND_DIR_REL = "sound\\"
-SOUND_DIR = getAbsoluteFromRelative(SOUND_DIR_REL)
-
-# Recursively get a list of sounds
-SOUNDS = {}
-
-for path, directories, filenames in os.walk(SOUND_DIR):
-    sources = {}
-
-    for filePath in filenames:
-        sources[filePath] = fastPCM(os.path.join(path, filePath))
-
-    if path == SOUND_DIR:
-        # Would rather have files right inside SOUND_DIR be listed under
-        # their own directory or else picking random choices from the files
-        # directly inside would be difficult (getting a list when you are
-        # expecting a sound
-        SOUNDS["root"] = sources
-    else:
-        SOUNDS[path[(len(SOUND_DIR) - len(path)):]] = sources
