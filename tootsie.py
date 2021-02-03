@@ -2,11 +2,11 @@
 import os
 
 # Import installed dependencies
-from discord.ext import commands
 from dotenv import load_dotenv
 
 # Import our own files
 from constants import BASICS
+from fartbot import FartBot
 import events
 import arsenal
 
@@ -16,7 +16,7 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 # Store an instance the Discord bot class
-bot = commands.Bot(command_prefix=BASICS["CMD_PREFIX"])
+bot = FartBot(command_prefix=BASICS["CMD_PREFIX"])
 
 # Append bot events with our own
 events.appendEvents(bot)
