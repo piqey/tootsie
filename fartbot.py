@@ -24,7 +24,7 @@ def eHandler(e):
 # Make FartBot subclass to add useful functions/methods
 class FartBot(commands.Bot):
     # Method used to make the bot join a voice channel, fart & leave
-    async def fart(self, voiceChannel):
+    async def fart(self, voiceChannel, reps=1):
         # Get channel name
         channel = voiceChannel.name
 
@@ -32,12 +32,13 @@ class FartBot(commands.Bot):
         vc = await voiceChannel.connect()
 
         # Stream the sound
-        await soundManager.playSound(
-            vc,
-            pickFart(),
-            group=SOUND_SUBDIR,
-            after=eHandler
-        )
+        for _ in range(reps):
+            await soundManager.playSound(
+                vc,
+                pickFart(),
+                group=SOUND_SUBDIR,
+                after=eHandler
+            )
 
         # Announce in the script window that we're done doing our job
         print(PRINTS["FART_PLAYED"].format(channel=channel))

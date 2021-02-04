@@ -30,8 +30,7 @@ def addCommands(bot):
             await context.channel.send(reply)
 
             # You know what this does
-            for _ in range(reps):
-                await bot.fart(voiceChannel)
+            await bot.fart(voiceChannel, reps)
         else:
             print(PRINTS["FART_FAILED"])
             reply = MESSAGES["FART_FAILED"].format(user=context.author.name)
