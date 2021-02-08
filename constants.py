@@ -18,6 +18,7 @@ PRINTS = {
     "FART_FAILED": "Unable to rip ass; user is not in a voice channel.",
     "FART_PLAYED": "Finished deploying weapons in {channel}.",
     "FART_ERROR": "Unable to rip ass; error encountered: {error}",
+    "FART_DISCONNECTED": "Somehow lost connection to voice channel (probably kicked).",
 
     # General use prints
     "DISCONNECTING": "Disconnecting...",

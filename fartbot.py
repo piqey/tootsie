@@ -38,12 +38,16 @@ class FartBot(commands.Bot):
 
         # Stream the sound
         for _ in range(reps):
-            await soundManager.playSound(
-                vc,
-                pickFart(),
-                group=SOUND_SUBDIR,
-                after=eHandler
-            )
+            if vc.is_connected():
+                await soundManager.playSound(
+                    vc,
+                    pickFart(),
+                    group=SOUND_SUBDIR,
+                    after=eHandler
+                )
+            else:
+                print(PRINTS["FART_DISCONNECTED"])
+                break
 
         # Announce in the script window that we're done doing our job
         print(PRINTS["FART_PLAYED"].format(channel=channel))
