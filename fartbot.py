@@ -1,5 +1,5 @@
 # Import native dependencies
-import random
+from random import choice
 
 # Import installed dependencies
 from discord.ext import commands
@@ -13,7 +13,7 @@ SOUND_SUBDIR = "farts"
 
 def pickFart():
     sounds = soundManager.getDict(SOUND_SUBDIR)
-    return random.choice(list(sounds.keys()))
+    return choice(list(sounds.keys()))
 
 
 def eHandler(e):

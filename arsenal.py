@@ -1,12 +1,12 @@
 # Import native dependencies
-import random
+from random import choice
 
 # Import our own files
 from constants import BASICS, PRINTS, MESSAGES
 
 
 def pickReply():
-    return random.choice(MESSAGES["FART_AFFIRMATION"])
+    return choice(MESSAGES["FART_AFFIRMATION"])
 
 
 def addCommands(bot):
