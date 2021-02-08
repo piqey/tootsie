@@ -17,21 +17,24 @@ def addCommands(bot):
         pass_context=True
     )
     async def forceFart(context, reps=1):
-        # Get the user's voice channel
-        voiceChannel = (context.message.author.voice and
-                        context.message.author.voice.channel)
+        if not bot.isConnected(context.guild):
+            # Get the user's voice channel
+            voiceChannel = (context.message.author.voice and
+                            context.message.author.voice.channel)
 
-        # Only join and wreak havoc if the user is in a voice channel
-        if reps > BASICS["FART_MAX"]:
-            await context.channel.send(MESSAGES["FART_TERRIBLE_PERSON"])
-        elif voiceChannel is not None:
-            # Communicate with the command's user
-            reply = pickReply().format(user=context.author.name)
-            await context.channel.send(reply)
+            # Only join and wreak havoc if the user is in a voice channel
+            if reps > BASICS["FART_MAX"]:
+                await context.channel.send(MESSAGES["FART_TERRIBLE_PERSON"])
+            elif voiceChannel is not None:
+                # Communicate with the command's user
+                reply = pickReply().format(user=context.author.name)
+                await context.channel.send(reply)
 
-            # You know what this does
-            await bot.fart(voiceChannel, reps)
+                # You know what this does
+                await bot.fart(voiceChannel, reps)
+            else:
+                print(PRINTS["FART_FAILED"])
+                reply = MESSAGES["FART_FAILED"].format(user=context.author.name)
+                await context.channel.send(reply)
         else:
-            print(PRINTS["FART_FAILED"])
-            reply = MESSAGES["FART_FAILED"].format(user=context.author.name)
-            await context.channel.send(reply)
+            await context.channel.send(MESSAGES["FART_FAILED_BUSY"])

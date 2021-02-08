@@ -46,5 +46,6 @@ MESSAGES = {
         "{user}, how can you make such a crappy request?"
     ),
     "FART_FAILED": "{user}, you have to be in a voice channel to do that!",
+    "FART_FAILED_BUSY": "I'm already in a voice channel; try again in a few moments.",
     "FART_TERRIBLE_PERSON": "You're a bigger piece of shit than I am. Denied."
 }
