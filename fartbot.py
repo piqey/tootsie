@@ -26,7 +26,7 @@ class FartBot(commands.Bot):
     # Method to check if bot is connected to a voice channel in a guild
     def isConnected(self, guild):
         vc = next((inst for inst in self.voice_clients if inst.guild == guild), None)
-        return vc and vc.is_connected()
+        return vc and vc.is_connected() or False
 
     # Method used to make the bot join a voice channel, fart & leave
     async def fart(self, voiceChannel, reps=1):
