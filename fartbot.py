@@ -1,5 +1,5 @@
 # Import native dependencies
-from random import choice
+from random import sample
 
 # Import installed dependencies
 from discord.ext import commands
@@ -11,9 +11,9 @@ from sound import soundManager
 SOUND_SUBDIR = "farts"
 
 
-def pickFart():
+def pickFarts(count=1):
     sounds = soundManager.getDict(SOUND_SUBDIR)
-    return choice(list(sounds.keys()))
+    return sample(list(sounds.keys()), count)
 
 
 def eHandler(e):
@@ -36,12 +36,15 @@ class FartBot(commands.Bot):
         # Join voice channel
         vc = await voiceChannel.connect()
 
+        # Get sample of farts list
+        farts = pickFarts(reps)
+
         # Stream the sound
         for _ in range(reps):
             if vc.is_connected():
                 await soundManager.playSound(
                     vc,
-                    pickFart(),
+                    farts.pop(),
                     group=SOUND_SUBDIR,
                     after=eHandler
                 )
