@@ -16,25 +16,23 @@ def addCommands(bot):
         description = "Let me know when you're in the mood ;)",
         pass_context = True
     )
-    async def forceFart(context, reps=1):
-        if not bot.isConnected(context.guild):
+    async def forceFart(ctx, reps = 1):
+        if not bot.isConnected(ctx.guild):
             # Get the user's voice channel
-            voiceChannel = (context.message.author.voice and
-                            context.message.author.voice.channel)
+            voiceChannel = (ctx.author.voice and
+                            ctx.author.voice.channel)
 
             # Only join and wreak havoc if the user is in a voice channel
             if reps > BASICS["FART_MAX"]:
-                await context.channel.send(MESSAGES["FART_TERRIBLE_PERSON"])
+                await ctx.respond(MESSAGES["FART_TERRIBLE_PERSON"])
             elif voiceChannel is not None:
                 # Communicate with the command's user
-                reply = pickReply().format(user=context.author.name)
-                await context.channel.send(reply)
+                await ctx.respond(pickReply().format(user=ctx.author.name))
 
                 # You know what this does
                 await bot.fart(voiceChannel, reps)
             else:
                 print(PRINTS["FART_FAILED"])
-                reply = MESSAGES["FART_FAILED"].format(user=context.author.name)
-                await context.channel.send(reply)
+                await ctx.respond(MESSAGES["FART_FAILED"].format(user=ctx.author.name))
         else:
-            await context.channel.send(MESSAGES["FART_FAILED_BUSY"])
+            await ctx.channel.send(MESSAGES["FART_FAILED_BUSY"])
