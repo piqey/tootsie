@@ -11,5 +11,4 @@ def appendEvents(bot):
         # Loop through all the guilds (servers) the bot is a part of
         for guild in bot.guilds:
             # Print the current guild
-            print(PRINTS["FOUND_GUILD"].format(user=bot.user, guild=guild.name,
-                  id=guild.id))
+            print(PRINTS["FOUND_GUILD"].format(user=bot.user, guild=guild.name, id=guild.id))
