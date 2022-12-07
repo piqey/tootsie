@@ -11,10 +11,10 @@ def pickReply():
 
 def addCommands(bot):
     # TODO: Disable if bot is already in a voice channel
-    @bot.command(
-        name="fart",
-        help="Forces the bot to do what it does best",
-        pass_context=True
+    @bot.slash_command(
+        name = "fart",
+        description = "Let me know when you're in the mood ;)",
+        pass_context = True
     )
     async def forceFart(context, reps=1):
         if not bot.isConnected(context.guild):
