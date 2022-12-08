@@ -3,7 +3,8 @@ from random import choice
 
 # Import our own files
 from constants import BASICS, PRINTS, MESSAGES
-from typing import Optional
+import discord
+from discord.commands import Option
 
 
 def pickReply():
@@ -17,10 +18,15 @@ def addCommands(bot):
         description = "Let me know when you're in the mood ;)",
         pass_context = True
     )
-    async def forceFart(ctx, reps: Optional[int]):
-        if reps is None:
-            reps = 1
-
+    async def forceFart(
+        ctx: discord.ApplicationContext,
+        reps: Option(
+			int,
+			"How many times to play a sound (be reasonable)",
+			required = False,
+			default = 1
+		)
+    ):
         if not bot.isConnected(ctx.guild):
             # Get the user's voice channel
             voiceChannel = (ctx.author.voice and
