@@ -1,7 +1,6 @@
 # Basic constants
 BASICS = {
-    "CMD_PREFIX": "]",
-    "FART_MAX": 8
+    "CMD_PREFIX": "]"
 }
 
 # Prints

@@ -1,4 +1,5 @@
 # Import native dependencies
+import os
 from random import sample
 
 # Import installed dependencies
@@ -6,14 +7,11 @@ from discord.ext import commands
 
 # Import our own files
 from constants import PRINTS
-from sound import soundManager
+from sound import soundManager, SOUND_DIR
 
-SOUND_SUBDIR = "farts"
-
-
-def pickFarts(count=1):
-    sounds = soundManager.getDict(SOUND_SUBDIR)
-    return sample(list(sounds.keys()), count)
+def pickSounds(group, reps=1):
+    sounds = soundManager.getDict(group)
+    return sample(list(sounds.keys()), reps)
 
 
 def eHandler(e):
@@ -29,7 +27,7 @@ class FartBot(commands.Bot):
         return vc and vc.is_connected()
 
     # Method used to make the bot join a voice channel, fart & leave
-    async def fart(self, voiceChannel, reps=1):
+    async def play(self, voiceChannel, group, reps=1, delay=None):
         # Get channel name
         channel = voiceChannel.name
 
@@ -37,15 +35,16 @@ class FartBot(commands.Bot):
         vc = await voiceChannel.connect()
 
         # Get sample of farts list
-        farts = pickFarts(reps)
+        sounds = pickSounds(group, reps)
 
         # Stream the sound
         for _ in range(reps):
             if vc.is_connected():
                 await soundManager.playSound(
                     vc,
-                    farts.pop(),
-                    group=SOUND_SUBDIR,
+                    sounds.pop(),
+                    group=group,
+					delay=delay,
                     after=eHandler
                 )
             else:

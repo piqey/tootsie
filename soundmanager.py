@@ -23,7 +23,6 @@ class SoundManager:
         fileName = os.path.basename(path)
         self.sounds[group][fileName] = source
 
-    # TODO: Possibly make file grouping better (subdicts)
     def _loadSounds(self):
         for subpath, dirs, fileNames in os.walk(self.root):
             subdirPath = subpath[(len(self.root) - len(subpath)):]
@@ -50,13 +49,17 @@ class SoundManager:
 
         self.sounds[group][name] = discord.FFmpegPCMAudio(path)
 
-    async def playSound(self, vc, name, group=None, after=lambda e: print(e)):
+    async def playSound(self, vc, name, group=None, delay=None, after=lambda e: print(e)):
         # Start streaming the sound
         vc.play(self.getSound(name, group), after=after)
 
         # Wait until the sound is finished playing
-        while vc is not None and vc.is_playing():
-            await asyncio.sleep(1)
+        if delay is None:
+            while vc is not None and vc.is_playing():
+                await asyncio.sleep(0.25)
+        else:
+            await asyncio.sleep(delay)
+
 
         # Stop the player just in case
         vc.stop()
